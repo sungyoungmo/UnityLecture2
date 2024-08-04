@@ -28,6 +28,7 @@ namespace MyProject.State
             moveState.Initialize(player);
             idleState.Initialize(player);
 
+
             currentState = idleState;
             idleState.Enter();
         }

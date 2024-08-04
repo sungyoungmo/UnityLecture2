@@ -19,7 +19,7 @@ namespace MyProject.State
 
         public override void Exit()
         {
-            Debug.Log("이동 상태 종료");
+            //Debug.Log("이동 상태 종료");
         }
     }
 }

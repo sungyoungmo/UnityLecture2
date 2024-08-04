@@ -20,7 +20,7 @@ namespace MyProject.State
 
         public override void Exit()
         {
-            Debug.Log("대기 상태 종료");
+            //Debug.Log("대기 상태 종료");
             
         }
     }

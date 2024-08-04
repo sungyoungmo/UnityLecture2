@@ -16,6 +16,11 @@ namespace MyProject.MonsterState
 
 		public Monster monster;
 
+        private void Awake()
+        {
+			monster = GetComponent<Monster>();
+        }
+
 
         private void Start()
         {
@@ -25,16 +30,21 @@ namespace MyProject.MonsterState
 
 			monsterIdle.Initialize(monster);
 			monsterChase.Initialize(monster);
-			monsterAttack.Initialize(monster);
-
-
+			monsterAttack.Initialize(monster);		
+			
 			currentState = monsterIdle;
 			monsterIdle.Enter();
-        }
+
+			
+		}
 
 		public void Transition(MonsterStateBase state)
 		{
-			if (currentState == state) return;
+			if (currentState == state)
+            {
+				return;
+            }
+				
 
 			currentState.Exit();
 			currentState = state;

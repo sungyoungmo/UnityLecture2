@@ -5,10 +5,9 @@ using UnityEngine;
 
 namespace MyProject.MonsterState
 {
-	public class MonsterStateBase : MonoBehaviour
+	public class MonsterStateBase
 	{
 		public Monster monster;
-
 
 		public virtual void Enter()
         {

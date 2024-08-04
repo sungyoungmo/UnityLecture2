@@ -30,6 +30,11 @@ namespace MyProject.MonsterState
         private void Awake()
         {
             msm = GetComponent<MonsterStateMachine>();
+
+            if (msm == null)
+            {
+                Debug.LogError("err");
+            }
         }
 
         private void Start()
@@ -38,6 +43,7 @@ namespace MyProject.MonsterState
 
             GameManager.Instance.onDayNightChange += OnDayNightChange;
             OnDayNightChange(GameManager.Instance.isDay);
+
         }
 
         private void Update()
@@ -62,7 +68,7 @@ namespace MyProject.MonsterState
                     transform.position.z - GameManager.Instance.playerObj.transform.position.z
                 );
 
-            if (Vector3.Magnitude(distance) < 1)
+            if (Vector3.Magnitude(distance) < 1.5f)
             {
                 msm.Transition(msm.monsterAttack);
             }
@@ -75,7 +81,6 @@ namespace MyProject.MonsterState
                 msm.Transition(msm.monsterIdle);
             }
 
-            print(Vector3.Magnitude(distance));
         }
 
 

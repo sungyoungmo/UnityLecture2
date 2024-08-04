@@ -24,9 +24,12 @@ public class GameManager : MonoBehaviour
 
 
     private List<MyProject.MonsterState.Monster> monsters = new(); // 구독자들
+    private List<MyProject.Chest.Chest> chests = new();
 
     // C#의 event는 옵저버 패턴 구현에 최적화된 구조로 만들어져 있으므로 event를 활용하는 것만으로도 옵저버 패턴을 적용했다고 볼 수 있음
     public event Action<bool> onDayNightChange;
+
+    Coroutine EarthquakeCoroutine;
 
     private void Awake()
     {
@@ -58,6 +61,12 @@ public class GameManager : MonoBehaviour
             onDayNightChange?.Invoke(isDay);
 
         }
+
+
+        if (EarthquakeCoroutine == null && UnityEngine.Random.Range(1, 1000) == 14 && !isDay)
+        {
+            EarthquakeCoroutine = StartCoroutine(Earthquake());
+        }
     }
 
     public void OnMonsterSpawn(MyProject.MonsterState.Monster monster)
@@ -69,6 +78,34 @@ public class GameManager : MonoBehaviour
     public void OnMonsterDespawn(MyProject.MonsterState.Monster monster)
     {
         monsters.Remove(monster);
+    }
+
+    public void OnChestSpawn(MyProject.Chest.Chest chest)
+    {
+        chests.Add(chest);
+        chest.OnDayNightChangeMimic(isDay);
+    }
+
+    public void OnChestDespawn(MyProject.Chest.Chest chest)
+    {
+        chests.Remove(chest);
+    }
+
+    IEnumerator Earthquake()
+    {
+        print("Earthquake");
+
+        var chestsList = new List<MyProject.Chest.Chest>(chests);
+
+        foreach (var c in chestsList)
+        {
+            c.gameObject.SetActive(false);
+            chests.Remove(c);
+        }
+
+        yield return new WaitForSeconds(5.0f);
+
+        EarthquakeCoroutine = null;
     }
 
 }

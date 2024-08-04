@@ -7,10 +7,16 @@ namespace MyProject.MonsterState
 {
 	public class MonsterAttackState : MonsterStateBase
 	{
+        public MonsterAttackState()
+        {
+
+        }
+
+
         public override void Enter()
         {
-            monster.ms = MonsterState.IDLE;
-            Debug.Log("공격 상태 시작");
+            monster.ms = MonsterState.ATTACK;
+            //Debug.Log("공격 상태 시작");
         }
 
         public override void Update()
@@ -21,7 +27,7 @@ namespace MyProject.MonsterState
 
         public override void Exit()
         {
-            Debug.Log("공격 상태 종료");
+            //Debug.Log("공격 상태 종료");
         }
     }
 }
