@@ -8,13 +8,17 @@ namespace MyProject
 {
 	public class WebRequestTest : MonoBehaviour
 	{
+		public List<string> ImageURLs;
+
 		public string imageURL;
 		public RawImage rawImage;
 		public Image image;
 
 		private void Start()
         {
-			_ = StartCoroutine(GetWebTexture(imageURL));
+			_ = StartCoroutine(GetWebTextureByOrder(ImageURLs));
+			//_ = StartCoroutine(GetWebTexture(imageURL));
+
 			// _ = 는 아래처럼 리턴값이 있는 함수에서 리소스 낭비를 막기 위해 리턴을 받지 않는다는 뜻.
 			//Coroutine coroutine = StartCoroutine(GetWebTexture(imageURL));
 		}
@@ -31,6 +35,7 @@ namespace MyProject
 
 			if (www.result != UnityWebRequest.Result.Success)
             {
+				print(url);
 				Debug.LogError($"HTTP 통신 실패: {www.error}");
             }
 			else
@@ -47,8 +52,17 @@ namespace MyProject
 
 				image.SetNativeSize();
 			}
-
-			
         }
+
+		IEnumerator GetWebTextureByOrder(List<string> url)
+        {
+            foreach (var item in url)
+            {
+				yield return StartCoroutine(GetWebTexture(item));
+				print("호출");
+            }
+        }
+
+
 	}
 }
