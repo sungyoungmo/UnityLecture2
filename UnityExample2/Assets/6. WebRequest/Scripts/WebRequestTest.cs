@@ -59,6 +59,7 @@ namespace MyProject
             foreach (var item in url)
             {
 				yield return StartCoroutine(GetWebTexture(item));
+				yield return new WaitForSeconds(1.0f);
 				print("»£√‚");
             }
         }
